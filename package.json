@@ -4,6 +4,7 @@
   "description": "Cisco Meraki CMX receiver",
   "main": "cmxreceiver.js",
   "scripts": {
+    "start": "node cmxreceiver.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Cory Guynn",
