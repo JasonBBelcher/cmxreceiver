@@ -20,11 +20,11 @@ var route = process.env.ROUTE || "/cmx";
 //**********************************************************
 
 // Express Server
-var express = require("express");
-var app = express();
-var bodyParser = require("body-parser");
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
+const fs = require("promisify-fs");
 
-//
 app.use(bodyParser.json({ limit: "25mb" }));
 
 // CMX Location Protocol, see https://documentation.meraki.com/MR/Monitoring_and_Reporting/CMX_Analytics#API_Configuration
@@ -39,7 +39,20 @@ app.get(route, function(req, res) {
 app.post(route, function(req, res) {
   if (req.body.secret == secret) {
     console.log("Secret verified");
-    res.status(200).json(req.body);
+    console.log(req.body);
+    fs.writeFile(
+      `./data/${Math.random()
+        .toString(36)
+        .substr(2)}.json`,
+      req.body
+    )
+      .then(() => {
+        return res.status(200).json({ data: req.body });
+      })
+      .catch(e => {
+        console.error(e);
+        return res.status(400).json({ error: e });
+      });
   } else {
     res.status(401).json({ error: "incorrect secret" });
   }
