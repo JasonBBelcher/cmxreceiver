@@ -10,7 +10,7 @@ A basic web service to accept CMX data from a Cisco Meraki network
 -- This skeleton app will only place the data received on the console. It's up to the developer to use this how ever required
 
 */
-
+require('dotenv').config()
 // CHANGE THESE CONFIGURATIONS to match your CMX configuration
 var port = process.env.OVERRIDE_PORT || process.env.PORT || 1890;
 var secret = process.env.SECRET || 'enterYourSecret';
